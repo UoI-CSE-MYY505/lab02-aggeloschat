@@ -13,16 +13,15 @@ prog:
 # Write your code here!
 # Do not remove the prog label or write code above it!
 
-findBackwards:
+find_Backwards:
     beq a1,zero,ret0 # If array is size 0 returns 0
-    slli s0,a1,2     # Size of array multiplied with 4. We store in s0 how many bytes to move from the start of the array to get to one word after the last word of the array
+    slli s0,a1,2     # we get the address of one word past the last word of the array
     add s0,s0,a0     
-loop:                # Loop until we find the element of the array we want but backwards,if we get to the first element of the array and did not find the element we searched for returns 0
+loop:                # Loop until we find the element of the array we want but backwards,otherwise ret0 runs
     addi s0,s0,-4
     lw t1, 0x0(s0)
     beq t1,a2,done
-    beq s0,a0,ret0
-    j loop
+    bne s0,a0,loop
 
 ret0:
     add s0,zero,zero # Not found
